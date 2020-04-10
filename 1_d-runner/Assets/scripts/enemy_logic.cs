@@ -16,6 +16,7 @@ enum enemystate
 public class enemy_logic : MonoBehaviour
 {
     NavMeshAgent m_navmesh;
+     int i = 1;
     float distance;
     Transform player;
     enemystate state = enemystate.bitting;
@@ -39,7 +40,6 @@ public class enemy_logic : MonoBehaviour
     {
         
         float distance = Vector3.Distance(transform.position, player.position);
-        Debug.Log(distance);
         switch (state)
         {
             case (enemystate.bitting):
@@ -74,8 +74,10 @@ public class enemy_logic : MonoBehaviour
         }
         if (isdead)
         {
-            m_navmesh.isStopped = true;
-            m_navmesh.velocity = Vector3.zero;
+            i = 0;
+           /* m_navmesh.isStopped = true;
+            m_navmesh.velocity = Vector3.zero;*/
+            m_navmesh.enabled = false;
 
             enabled = false;
         }
@@ -140,19 +142,23 @@ public class enemy_logic : MonoBehaviour
     }
     void die()
     {
+        Debug.Log("executed again");
+        i = 0;
         isdead = true;
 
         m_animator.SetTrigger("isdead");
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag=="Player" && !isdead)
+        if(other.gameObject.tag=="Player" && i==1)
         {
             die();
         }
     }
     public void save(int index)
     {
+      
+        PlayerPrefs.SetInt("enabeled"+index, i);
         PlayerPrefs.SetInt("enemystate" + index, (int)state);
         PlayerPrefs.SetFloat("pos_x"+index, transform.position.x);
         PlayerPrefs.SetFloat("pos_y"+index, transform.position.y);
@@ -170,8 +176,9 @@ public class enemy_logic : MonoBehaviour
     }
     public void load(int index)
     {
-
+        
         state = (enemystate)PlayerPrefs.GetInt("enemystate" + index);
+        i = PlayerPrefs.GetInt("enabeled"+index);
         float pos_x = PlayerPrefs.GetFloat("pos_x"+index);
         float pos_y = PlayerPrefs.GetFloat("pos_y"+index);
         float pos_z = PlayerPrefs.GetFloat("pos_z"+index);
@@ -183,26 +190,20 @@ public class enemy_logic : MonoBehaviour
         int animhash = PlayerPrefs.GetInt("enemyhash" + index);
         float enemytime = PlayerPrefs.GetFloat("enemytime" + index);
         m_animator.Play(animhash, 0, enemytime);
-        if(state==enemystate.die)
+        if(i==0)
         {
             isdead = true;
         }
-        else if (state == enemystate.bitting)
+        else if(i==1)
         {
-            biting();
+            Debug.Log("executed");
+            m_navmesh.enabled = true;
+            enabled = true;
+            isdead = false;
         }
-        else if (state == enemystate.chase)
-        {
-            chase();
-        }
-        else if (state == enemystate.roar)
-        {
-            roar();
-        }
-        else if (state == enemystate.hit)
-        {
-            attack();
-        }
+
+
+       
 
         transform.position = new Vector3(pos_x, pos_y, pos_z);
         transform.rotation = Quaternion.Euler(rot_x, rot_y, rot_z);
