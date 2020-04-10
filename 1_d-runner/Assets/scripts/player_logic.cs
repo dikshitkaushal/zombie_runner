@@ -39,7 +39,6 @@ public class player_logic : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Debug.Log(movement_x);   
         m_movement = Vector3.right* movement_x * movespeed * Time.deltaTime;
         if(isjumping)
         {

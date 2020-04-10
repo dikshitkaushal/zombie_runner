@@ -187,7 +187,22 @@ public class enemy_logic : MonoBehaviour
         {
             isdead = true;
         }
-       
+        else if (state == enemystate.bitting)
+        {
+            biting();
+        }
+        else if (state == enemystate.chase)
+        {
+            chase();
+        }
+        else if (state == enemystate.roar)
+        {
+            roar();
+        }
+        else if (state == enemystate.hit)
+        {
+            attack();
+        }
 
         transform.position = new Vector3(pos_x, pos_y, pos_z);
         transform.rotation = Quaternion.Euler(rot_x, rot_y, rot_z);
