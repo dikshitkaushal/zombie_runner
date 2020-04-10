@@ -102,12 +102,13 @@ public class enemy_logic : MonoBehaviour
   
     private void roar()
     {
-        m_animator.SetTrigger("roar");
+       
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance < chasedistance)
         {
             state = enemystate.chase;
         }
+        m_animator.SetTrigger("roar");
     }
     private void chase()
     {
@@ -149,5 +150,48 @@ public class enemy_logic : MonoBehaviour
         {
             die();
         }
+    }
+    public void save(int index)
+    {
+        PlayerPrefs.SetInt("enemystate" + index, (int)state);
+        PlayerPrefs.SetFloat("pos_x"+index, transform.position.x);
+        PlayerPrefs.SetFloat("pos_y"+index, transform.position.y);
+        PlayerPrefs.SetFloat("pos_z"+index, transform.position.z);
+
+        PlayerPrefs.SetFloat("rot_x"+index, transform.rotation.eulerAngles.x);
+        PlayerPrefs.SetFloat("rot_y"+index, transform.rotation.eulerAngles.y);
+        PlayerPrefs.SetFloat("rot_z"+index, transform.rotation.eulerAngles.z);
+
+        AnimatorStateInfo info = m_animator.GetCurrentAnimatorStateInfo(0);
+        int animhash = info.fullPathHash;
+        PlayerPrefs.SetInt("enemyhash" + index, animhash);
+        float animtime = info.normalizedTime;
+        PlayerPrefs.SetFloat("enemytime" + index, animtime);
+    }
+    public void load(int index)
+    {
+
+        state = (enemystate)PlayerPrefs.GetInt("enemystate" + index);
+        float pos_x = PlayerPrefs.GetFloat("pos_x"+index);
+        float pos_y = PlayerPrefs.GetFloat("pos_y"+index);
+        float pos_z = PlayerPrefs.GetFloat("pos_z"+index);
+
+        float rot_x = PlayerPrefs.GetFloat("rot_x"+index);
+        float rot_y = PlayerPrefs.GetFloat("rot_y"+index);
+        float rot_z = PlayerPrefs.GetFloat("rot_z"+index);
+
+        int animhash = PlayerPrefs.GetInt("enemyhash" + index);
+        float enemytime = PlayerPrefs.GetFloat("enemytime" + index);
+        m_animator.Play(animhash, 0, enemytime);
+        if(state==enemystate.die)
+        {
+            isdead = true;
+        }
+       
+
+        transform.position = new Vector3(pos_x, pos_y, pos_z);
+        transform.rotation = Quaternion.Euler(rot_x, rot_y, rot_z);
+
+       
     }
 }

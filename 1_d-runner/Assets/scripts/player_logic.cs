@@ -73,4 +73,31 @@ public class player_logic : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, -90, 0);
         }
     }
+    public void save()
+    {
+        PlayerPrefs.SetFloat("pos_x", transform.position.x);
+        PlayerPrefs.SetFloat("pos_y", transform.position.y);
+        PlayerPrefs.SetFloat("pos_z", transform.position.z);
+
+        PlayerPrefs.SetFloat("rot_x", transform.rotation.eulerAngles.x);
+        PlayerPrefs.SetFloat("rot_y", transform.rotation.eulerAngles.y);
+        PlayerPrefs.SetFloat("rot_z", transform.rotation.eulerAngles.z);
+    }
+    public void load()
+    {
+        float pos_x = PlayerPrefs.GetFloat("pos_x");
+        float pos_y = PlayerPrefs.GetFloat("pos_y");
+        float pos_z = PlayerPrefs.GetFloat("pos_z");
+
+        float rot_x = PlayerPrefs.GetFloat("rot_x");
+        float rot_y = PlayerPrefs.GetFloat("rot_y");
+        float rot_z = PlayerPrefs.GetFloat("rot_z");
+
+        m_charactercontroller.enabled = false;
+
+        transform.position = new Vector3(pos_x, pos_y, pos_z);
+        transform.rotation = Quaternion.Euler(rot_x, rot_y, rot_z);
+
+        m_charactercontroller.enabled = true;
+    }
 }

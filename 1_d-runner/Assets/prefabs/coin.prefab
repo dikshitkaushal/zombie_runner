@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 237873679}
   m_Layer: 0
   m_Name: coin
-  m_TagString: Untagged
+  m_TagString: coins
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 39081306bbc896f478e6e1fce3293ae9, type: 3}
   mesh: {fileID: 4715809855437167142}
+  cointxt: {fileID: 0}
 --- !u!82 &237873679
 AudioSource:
   m_ObjectHideFlags: 0
