@@ -705,6 +705,21 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4757928463684280645, guid: a903d811aec36694ba5b05ded7931abf,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 1.39
+      objectReference: {fileID: 0}
+    - target: {fileID: -4757928463684280645, guid: a903d811aec36694ba5b05ded7931abf,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4757928463684280645, guid: a903d811aec36694ba5b05ded7931abf,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a903d811aec36694ba5b05ded7931abf,
         type: 3}
       propertyPath: m_LocalPosition.x
